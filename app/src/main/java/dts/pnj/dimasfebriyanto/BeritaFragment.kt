@@ -1,27 +1,27 @@
 package dts.pnj.dimasfebriyanto
 
+import android.database.Cursor
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import dts.pnj.dimasfebriyanto.placeholder.PlaceholderContent
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import dts.pnj.dimasfebriyanto.database.NewsDAO
 
-/**
- * A fragment representing a list of Items.
- */
 class BeritaFragment : Fragment() {
 
     private var columnCount = 1
+    private lateinit var newsDAO: NewsDAO
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             columnCount = it.getInt(ARG_COLUMN_COUNT)
         }
+        newsDAO = NewsDAO(requireContext())
     }
 
     override fun onCreateView(
@@ -32,14 +32,28 @@ class BeritaFragment : Fragment() {
 
         if (view is RecyclerView) {
             with(view) {
-                layoutManager = when {
-                    columnCount <= 1 -> LinearLayoutManager(context)
-                    else -> GridLayoutManager(context, columnCount)
-                }
-                adapter = MyBeritaRecyclerViewAdapter(PlaceholderContent.ITEMS)
+                layoutManager = LinearLayoutManager(context)
+                adapter = MyBeritaRecyclerViewAdapter(getNewsFromDatabase())
             }
         }
         return view
+    }
+
+    private fun getNewsFromDatabase(): List<NewsItem> {
+        val newsList = mutableListOf<NewsItem>()
+        val cursor: Cursor = newsDAO.getAllNews()
+        with(cursor) {
+            while (moveToNext()) {
+                val id = getLong(getColumnIndexOrThrow(NewsDatabaseHelper.COLUMN_ID))
+                val title = getString(getColumnIndexOrThrow(NewsDatabaseHelper.COLUMN_TITLE))
+                val content = getString(getColumnIndexOrThrow(NewsDatabaseHelper.COLUMN_CONTENT))
+                val pathImage = getString(getColumnIndexOrThrow(NewsDatabaseHelper.COLUMN_PATH_IMAGE))
+                newsList.add(NewsItem(id, title, content, pathImage))
+            }
+            close()
+        }
+        Log.d("BeritaFragment", "getNewsFromDatabase: $newsList")
+        return newsList
     }
 
     companion object {
@@ -54,3 +68,5 @@ class BeritaFragment : Fragment() {
             }
     }
 }
+
+data class NewsItem(val id: Long, val title: String, val content: String, val pathImage: String)
