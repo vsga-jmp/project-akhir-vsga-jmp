@@ -27,15 +27,15 @@ class MyBeritaRecyclerViewAdapter(
         val item = values[position]
         holder.title.text = item.content
         holder.content.text = item.details
-        holder.image.setImageResource(item.imageResource) // Set the image resource
+        holder.image.setImageResource(item.imageResource)
     }
 
     override fun getItemCount(): Int = values.size
 
     inner class ViewHolder(binding: FragmentBeritaBinding) : RecyclerView.ViewHolder(binding.root) {
-        val title = binding.title // Adjust to match the binding field
-        val content = binding.content // Adjust to match the binding field
-        val image = binding.itemImage // Adjust to match the binding field
+        val title = binding.title
+        val content = binding.content
+        val image = binding.itemImage
 
         override fun toString(): String {
             return super.toString() + " '" + content.text + "'"

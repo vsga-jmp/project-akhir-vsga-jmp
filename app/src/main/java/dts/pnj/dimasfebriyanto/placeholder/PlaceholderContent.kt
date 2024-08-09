@@ -4,26 +4,17 @@ import dts.pnj.dimasfebriyanto.R
 import java.util.ArrayList
 import java.util.HashMap
 
-/**
- * Helper class for providing sample content for user interfaces created by
- * Android template wizards.
- */
+
 object PlaceholderContent {
 
-    /**
-     * An array of sample (placeholder) items.
-     */
     val ITEMS: MutableList<PlaceholderItem> = ArrayList()
 
-    /**
-     * A map of sample (placeholder) items, by ID.
-     */
+
     val ITEM_MAP: MutableMap<String, PlaceholderItem> = HashMap()
 
     private val COUNT = 25
 
     init {
-        // Add some sample items.
         for (i in 1..COUNT) {
             addItem(createPlaceholderItem(i))
         }
@@ -39,7 +30,7 @@ object PlaceholderContent {
             id = position.toString(),
             content = "Item $position",
             details = makeDetails(position),
-            imageResource = R.drawable.ic_launcher_foreground // Replace with a valid drawable resource
+            imageResource = R.drawable.ic_launcher_foreground
         )
     }
 
@@ -52,14 +43,12 @@ object PlaceholderContent {
         return builder.toString()
     }
 
-    /**
-     * A placeholder item representing a piece of content.
-     */
+
     data class PlaceholderItem(
         val id: String,
         val content: String,
         val details: String,
-        val imageResource: Int // Added image resource
+        val imageResource: Int
     ) {
         override fun toString(): String = content
     }

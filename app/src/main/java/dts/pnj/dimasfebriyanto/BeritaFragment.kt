@@ -30,7 +30,6 @@ class BeritaFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_berita_list, container, false)
 
-        // Set the adapter
         if (view is RecyclerView) {
             with(view) {
                 layoutManager = when {
