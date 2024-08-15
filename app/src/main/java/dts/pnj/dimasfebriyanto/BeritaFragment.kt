@@ -1,5 +1,6 @@
 package dts.pnj.dimasfebriyanto
 
+import DatabaseHelper
 import android.database.Cursor
 import android.os.Bundle
 import android.util.Log
@@ -44,10 +45,10 @@ class BeritaFragment : Fragment() {
         val cursor: Cursor = newsDAO.getAllNews()
         with(cursor) {
             while (moveToNext()) {
-                val id = getLong(getColumnIndexOrThrow(NewsDatabaseHelper.COLUMN_ID))
-                val title = getString(getColumnIndexOrThrow(NewsDatabaseHelper.COLUMN_TITLE))
-                val content = getString(getColumnIndexOrThrow(NewsDatabaseHelper.COLUMN_CONTENT))
-                val pathImage = getString(getColumnIndexOrThrow(NewsDatabaseHelper.COLUMN_PATH_IMAGE))
+                val id = getLong(getColumnIndexOrThrow(DatabaseHelper.COLUMN_ID))
+                val title = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_TITLE))
+                val content = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_CONTENT))
+                val pathImage = getString(getColumnIndexOrThrow(DatabaseHelper.COLUMN_PATH_IMAGE))
                 newsList.add(NewsItem(id, title, content, pathImage))
             }
             close()

@@ -22,8 +22,8 @@ class DetailNewsActivity : AppCompatActivity() {
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.title = title
-        supportActionBar?.setDisplayHomeAsUpEnabled(true) // Show back button
-        supportActionBar?.setDisplayShowTitleEnabled(false) // Hide default title
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         val titleTextView = findViewById<TextView>(R.id.detail_title)
         val contentTextView = findViewById<TextView>(R.id.detail_content)
@@ -36,14 +36,13 @@ class DetailNewsActivity : AppCompatActivity() {
             "drawable/tech_update" -> R.drawable.tech_update
             "drawable/sports_highlights" -> R.drawable.sports_highlights
             "drawable/world_news" -> R.drawable.world_news
-            else -> R.drawable.ic_news // Placeholder or default image
+            else -> R.drawable.ic_news
         }
         imageView.setImageResource(imageResource)
     }
 
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         return if (item.itemId == android.R.id.home) {
-            // Handle the back button click
             finish()
             true
         } else {

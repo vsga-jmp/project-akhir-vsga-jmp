@@ -1,6 +1,10 @@
 package dts.pnj.dimasfebriyanto
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.Toolbar
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -25,8 +29,7 @@ class MainActivity : AppCompatActivity() {
         writeUserInfoToFile()
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+        bottomNavigationView.setOnItemSelectedListener {item->
             var selectedFragment: Fragment? = null
 
             when (item.itemId) {
@@ -42,12 +45,45 @@ class MainActivity : AppCompatActivity() {
             }
 
             true
+
         }
+
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragmentLayout, HomeFragment())
                 .commit()
+        }
+
+        val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.alumni_nav_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.nav_add_alumni -> {
+                val intent = Intent(this, AddAlumniActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.nav_data_alumni -> {
+                val intent = Intent(this, DataAlumniActivity::class.java)
+                startActivity(intent)
+                true
+            }
+            R.id.nav_logout -> {
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
